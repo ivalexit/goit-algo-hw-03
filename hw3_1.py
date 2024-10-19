@@ -49,3 +49,11 @@ def copy_and_delete_files_recursive(src_dir, dest_dir):
     except Exception as e:
         print(f'An error occurred: {e}')
            
+def main():
+    try: #Parse command line args
+        if len(sys.argv) < 2:
+            print(f'Please specify the path to the source directory.')
+            sys.exit(1)
+
+        src_dir = sys.argv[1] #Source directory
+        dest_dir = sys.argv[2] if len(sys.argv) > 2 else 'dist' # Destination directory
