@@ -45,7 +45,7 @@ def copy_and_delete_files_recursive(src_dir, dest_dir):
                     print(f'Deleted original file: {item_path}')
 
     except OSError as e:
-        print(f'Error accesing files or directories: {e}')
+        print(f'Error accessing files or directories: {e}')
     except Exception as e:
         print(f'An error occurred: {e}')
            
@@ -57,3 +57,18 @@ def main():
 
         src_dir = sys.argv[1] #Source directory
         dest_dir = sys.argv[2] if len(sys.argv) > 2 else 'dist' # Destination directory
+
+        print(f'Creating random files in directory {src_dir}')
+        create_random_files(src_dir, num_files=10)
+
+        print(f'Sorting files in directory {dest_dir} and deleting them from {src_dir}')
+        copy_and_delete_files_recursive(src_dir, dest_dir)
+        print(f'Files have been copied, sorted and deleted from the source directory.')
+
+    except Exception as e:
+        print(f'An unexpected error occurred: {e}')
+
+if __name__ == '__main__':
+    main()
+
+    
