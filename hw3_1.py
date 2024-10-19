@@ -15,3 +15,13 @@ def create_random_files(directory, num_files=10):
             file_path.write_text(f'This is a random test file with extension .{ext}')
             print(f'Created file: {file_path}')
 
+
+def copy_and_delete_files_recursive(src_dir, dest_dir):
+    try:
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+
+        for item in os.listdir(src_dir):
+            item_path = os.path.join(src_dir, item)
+
+            
