@@ -41,4 +41,11 @@ def copy_and_delete_files_recursive(src_dir, dest_dir):
                     shutil.copy2(item_path, os.path.join(target_dir, item))
                     print(f'Copying file: {item_path} -> {os.path.join(target_dir, item)}')
 
-                    
+                    os.remove(item_path)
+                    print(f'Deleted original file: {item_path}')
+
+    except OSError as e:
+        print(f'Error accesing files or directories: {e}')
+    except Exception as e:
+        print(f'An error occurred: {e}')
+           
