@@ -24,4 +24,21 @@ def copy_and_delete_files_recursive(src_dir, dest_dir):
         for item in os.listdir(src_dir):
             item_path = os.path.join(src_dir, item)
 
-            
+            if os.path.isdir(item_path):
+                copy_and_delete_files_recursive(item_path, dest_dir)
+
+                if not os.listdir(item_path):
+                    os.rmdir(item_path)
+                    print(f'Deleted empty directory: {item_path}')
+                else:
+                    file_extension = os.path.splitext(item)[1][1:]
+                    if not file_extension:
+                        file_extension = "no_extension"
+                    target_dir = os.path.join(dest_dir, file_extension)
+                    if not os.path.exists(target_dir)
+                        os.makedirs(target_dir)
+
+                    shutil.copy2(item_path, os.path.join(target_dir, item))
+                    print(f'Copying file: {item_path} -> {os.path.join(target_dir, item)}')
+
+                    
