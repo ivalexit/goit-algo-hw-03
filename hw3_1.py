@@ -18,6 +18,10 @@ def create_random_files(directory, num_files=10):
 
 def copy_and_delete_files_recursive(src_dir, dest_dir):
     try:
+        if not os.path.exists(src_dir):
+            print(f"Source directory '{src_dir}' does not exist.")
+            return
+        
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
 
@@ -27,22 +31,22 @@ def copy_and_delete_files_recursive(src_dir, dest_dir):
             if os.path.isdir(item_path):
                 copy_and_delete_files_recursive(item_path, dest_dir)
 
+            
                 if not os.listdir(item_path):
-                    os.rmdir(item_path) # Delete empty directory 
+                    os.rmdir(item_path)
                     print(f'Deleted empty directory: {item_path}')
-                else:
-                    file_extension = os.path.splitext(item)[1][1:]
-                    if not file_extension:
-                        file_extension = "no_extension"
-                    target_dir = os.path.join(dest_dir, file_extension)
-                    if not os.path.exists(target_dir):
-                        os.makedirs(target_dir)
+            else:
+                file_extension = os.path.splitext(item)[1][1:] or "no_extension"
+                target_dir = os.path.join(dest_dir, file_extension)
 
-                    shutil.copy2(item_path, os.path.join(target_dir, item))
-                    print(f'Copying file: {item_path} -> {os.path.join(target_dir, item)}')
+                if not os.path.exists(target_dir):
+                    os.makedirs(target_dir)
 
-                    os.remove(item_path)  # Delete file after copying
-                    print(f'Deleted original file: {item_path}')
+                shutil.copy2(item_path, os.path.join(target_dir, item))
+                print(f'Copying file: {item_path} -> {os.path.join(target_dir, item)}')
+
+                os.remove(item_path) 
+                print(f'Deleted original file: {item_path}')
 
     except OSError as e:
         print(f'Error accessing files or directories: {e}')
